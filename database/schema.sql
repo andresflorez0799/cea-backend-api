@@ -1,9 +1,16 @@
 CREATE TABLE IF NOT EXISTS users (
   id SERIAL PRIMARY KEY,
   full_name VARCHAR(150) NOT NULL,
+  first_name VARCHAR(80),
+  last_name VARCHAR(80),
+  address VARCHAR(255),
   email VARCHAR(150) NOT NULL UNIQUE,
+  phone VARCHAR(30),
   password_hash TEXT NOT NULL,
   role VARCHAR(30) NOT NULL DEFAULT 'Student',
+  enrollment_category VARCHAR(20),
+  license_category_code VARCHAR(10),
+  profile_photo TEXT,
   is_active BOOLEAN NOT NULL DEFAULT true,
   created_at TIMESTAMP NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMP NOT NULL DEFAULT NOW()
@@ -12,13 +19,26 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS instructors (
   id SERIAL PRIMARY KEY,
   full_name VARCHAR(150) NOT NULL,
-  is_active BOOLEAN NOT NULL DEFAULT true
+  email VARCHAR(150),
+  phone VARCHAR(30),
+  license_category_code VARCHAR(10),
+  profile_photo TEXT,
+  is_active BOOLEAN NOT NULL DEFAULT true,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS vehicles (
   id SERIAL PRIMARY KEY,
   name VARCHAR(120) NOT NULL,
-  is_active BOOLEAN NOT NULL DEFAULT true
+  plate VARCHAR(20),
+  vehicle_type VARCHAR(50),
+  category_code VARCHAR(10),
+  model VARCHAR(30),
+  color VARCHAR(40),
+  is_active BOOLEAN NOT NULL DEFAULT true,
+  created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMP NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS system_parameters (
@@ -45,3 +65,33 @@ CREATE TABLE IF NOT EXISTS theory_classes (
   class_time TIME NOT NULL,
   category VARCHAR(50)
 );
+
+ALTER TABLE users ADD COLUMN IF NOT EXISTS first_name VARCHAR(80);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS last_name VARCHAR(80);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS address VARCHAR(255);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS phone VARCHAR(30);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS enrollment_category VARCHAR(20);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS license_category_code VARCHAR(10);
+ALTER TABLE users ADD COLUMN IF NOT EXISTS profile_photo TEXT;
+
+
+
+ALTER TABLE instructors ADD COLUMN IF NOT EXISTS email VARCHAR(150);
+ALTER TABLE instructors ADD COLUMN IF NOT EXISTS phone VARCHAR(30);
+ALTER TABLE instructors ADD COLUMN IF NOT EXISTS license_category_code VARCHAR(10);
+ALTER TABLE instructors ADD COLUMN IF NOT EXISTS profile_photo TEXT;
+ALTER TABLE instructors ADD COLUMN IF NOT EXISTS created_at TIMESTAMP NOT NULL DEFAULT NOW();
+ALTER TABLE instructors ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP NOT NULL DEFAULT NOW();
+
+ALTER TABLE vehicles ADD COLUMN IF NOT EXISTS plate VARCHAR(20);
+ALTER TABLE vehicles ADD COLUMN IF NOT EXISTS vehicle_type VARCHAR(50);
+ALTER TABLE vehicles ADD COLUMN IF NOT EXISTS category_code VARCHAR(10);
+ALTER TABLE vehicles ADD COLUMN IF NOT EXISTS model VARCHAR(30);
+ALTER TABLE vehicles ADD COLUMN IF NOT EXISTS color VARCHAR(40);
+ALTER TABLE vehicles ADD COLUMN IF NOT EXISTS created_at TIMESTAMP NOT NULL DEFAULT NOW();
+ALTER TABLE vehicles ADD COLUMN IF NOT EXISTS updated_at TIMESTAMP NOT NULL DEFAULT NOW();
+
+
+CREATE UNIQUE INDEX IF NOT EXISTS users_email_unique_idx ON users(email);
+CREATE UNIQUE INDEX IF NOT EXISTS instructors_email_unique_idx ON instructors(email);
+CREATE UNIQUE INDEX IF NOT EXISTS vehicles_plate_unique_idx ON vehicles(plate);

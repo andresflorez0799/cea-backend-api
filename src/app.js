@@ -10,6 +10,8 @@ const practicalClassesRoutes = require("./routes/practicalClasses.routes");
 const theoryClassesRoutes = require("./routes/theoryClasses.routes");
 const schedulingRoutes = require("./routes/scheduling.routes");
 const adminRoutes = require("./routes/admin.routes");
+const instructorsRoutes = require("./routes/instructors.routes");
+const vehiclesRoutes = require("./routes/vehicles.routes");
 
 const app = express();
 
@@ -27,6 +29,8 @@ app.use("/api/practical-classes", practicalClassesRoutes);
 app.use("/api/theory-classes", theoryClassesRoutes);
 app.use("/api/scheduling", schedulingRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/instructors", instructorsRoutes);
+app.use("/api/vehicles", vehiclesRoutes);
 
 app.use(errorMiddleware);
 

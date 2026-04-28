@@ -7,7 +7,8 @@ async function getPracticalClasses(userId) {
             pc.class_time AS time,
             i.full_name AS instructor_name,
             v.name AS vehicle_name,
-            pc.status
+            pc.status,
+            60::int AS duration_minutes
      FROM practical_classes pc
      INNER JOIN instructors i ON i.id = pc.instructor_id
      INNER JOIN vehicles v ON v.id = pc.vehicle_id
@@ -23,6 +24,8 @@ async function getPracticalClasses(userId) {
     instructorName: row.instructor_name,
     vehicleName: row.vehicle_name,
     status: row.status,
+    durationMinutes: row.duration_minutes,
+    classLabel: 'Clase práctica',
   }));
 }
 
@@ -79,6 +82,8 @@ async function createPracticalClass(userId, payload) {
     status: result.rows[0].status,
     instructorName: detailResult.rows[0].instructor_name,
     vehicleName: detailResult.rows[0].vehicle_name,
+    durationMinutes: 60,
+    classLabel: 'Clase práctica',
   };
 }
 
