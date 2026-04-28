@@ -53,8 +53,22 @@ VALUES
   ('Carro particular 101', 'CAR101', 'Automóvil', 'B1', '2024', 'Blanco', true)
 ON CONFLICT DO NOTHING;
 
-INSERT INTO theory_classes (topic, class_date, class_time, category)
+INSERT INTO theory_classes (topic, description, class_date, class_time, category, is_active)
 VALUES
-  ('Señales viales', CURRENT_DATE + INTERVAL '2 day', '08:00', 'B1'),
-  ('Normas de tránsito', CURRENT_DATE + INTERVAL '4 day', '10:00', 'A2')
+  (
+    'Señales viales',
+    'Reconocimiento de señales reglamentarias, preventivas e informativas aplicadas a la conducción segura.',
+    CURRENT_DATE + INTERVAL '2 day',
+    '08:00',
+    'B1',
+    true
+  ),
+  (
+    'Normas de tránsito',
+    'Revisión de normas básicas de circulación, prioridad vial, límites de velocidad y comportamiento responsable.',
+    CURRENT_DATE + INTERVAL '4 day',
+    '10:00',
+    'A2',
+    true
+  )
 ON CONFLICT DO NOTHING;
